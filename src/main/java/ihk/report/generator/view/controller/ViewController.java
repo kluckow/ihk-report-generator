@@ -2,10 +2,11 @@ package ihk.report.generator.view.controller;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import ihk.report.generator.excel.ExcelReader;
+import ihk.report.generator.util.FileUtils;
 import ihk.report.generator.view.util.dialogs.ChooseDialogHelper;
 import ihk.report.generator.view.util.dialogs.NotificationWindow;
 import javafx.fxml.FXML;
@@ -14,9 +15,6 @@ import javafx.scene.control.*;
 
 @SuppressWarnings("restriction")
 public class ViewController implements Initializable {
-
-	private static final String XLS_FILEFORMAT = ".xls";
-	private static final String XLSX_FILEFORMAT = ".xlsx";
 
 	@FXML
 	private Button btnSearchExcelDirectory;
@@ -37,7 +35,7 @@ public class ViewController implements Initializable {
 		this.btnSearchExcelDirectory.setOnAction(e -> {
 			e.consume();
 			System.out.println("test");
-			File excelDir = new ChooseDialogHelper("Verzeichnisauswahl für Excel-Dateien (xls/xslx)").openDirectoryChooser();
+			File excelDir = new ChooseDialogHelper("Verzeichnisauswahl für Excel-Dateien (.xls/.xslx)").openDirectoryChooser();
 			processSelectedDir(excelDir);
 		});
 	}
@@ -50,7 +48,7 @@ public class ViewController implements Initializable {
 		} else {
 			System.out.println("dir is: " + dir.getAbsolutePath());
 			
-			List<String> fileFormats = getExcelFormatsInDir(dir);
+			List<String> fileFormats = new FileUtils().getFormatsInDir(dir, new ExcelReader().getExcelFileFormats());
 			if (fileFormats != null) {
 				for (String fileFormat : fileFormats) {
 					System.out.println(fileFormat);
@@ -63,20 +61,4 @@ public class ViewController implements Initializable {
 		}
 	}
 
-	// TODO: create FileUtils for such methods
-	private List<String> getExcelFormatsInDir(File dir) {
-		
-		List<String> fileFormats = new ArrayList<String>();
-		for (File file : dir.listFiles()) {
-			if (file.getName().endsWith(XLS_FILEFORMAT) && !fileFormats.contains(XLS_FILEFORMAT)) {
-				fileFormats.add(XLS_FILEFORMAT);
-			} else if (file.getName().endsWith(XLSX_FILEFORMAT) && !fileFormats.contains(XLSX_FILEFORMAT)) {
-				fileFormats.add(XLSX_FILEFORMAT);
-			}
-		}
-		if (fileFormats.isEmpty()) {
-			return null;
-		}
-		return fileFormats;
-	} 
 }
