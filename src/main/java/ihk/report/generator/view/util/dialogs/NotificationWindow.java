@@ -1,4 +1,4 @@
-package ihk.report.generator.view;
+package ihk.report.generator.view.util.dialogs;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 /**
  * The Class NotificationWindow.
  */
+@SuppressWarnings("restriction")
 public class NotificationWindow {
 	
 	/** The Constant OK_BUTTON_TEXT. */

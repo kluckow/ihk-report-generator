@@ -4,8 +4,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<StackPane xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihk.report.generator.view.controller.ViewController">
+<StackPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ihk.report.generator.view.controller.ViewController">
    <children>
       <VBox prefHeight="400.0" prefWidth="600.0">
          <children>
@@ -28,6 +27,30 @@
                 </Menu>
               </menus>
             </MenuBar>
+            <Accordion prefHeight="401.0" prefWidth="800.0">
+              <panes>
+                <TitledPane text="Schritt 1: Verzeichnis für Excel-Dateien auswählen" underline="true">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="inputExcelDirectory" editable="false" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="300.0" />
+                              <Button fx:id="btnSearchExcelDirectory" layoutX="314.0" layoutY="14.0" maxWidth="200.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Durchsuchen" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </TitledPane>
+                <TitledPane text="Schritt 2: " underline="true">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </TitledPane>
+                <TitledPane text="untitled 3" underline="true">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </TitledPane>
+              </panes>
+            </Accordion>
          </children>
       </VBox>
    </children>
