@@ -27,7 +27,7 @@
                 </Menu>
               </menus>
             </MenuBar>
-            <Accordion prefHeight="401.0" prefWidth="800.0">
+            <Accordion prefHeight="593.0" prefWidth="800.0">
               <panes>
                 <TitledPane text="Schritt 1: Verzeichnis für Excel-Dateien auswählen" underline="true">
                   <content>
