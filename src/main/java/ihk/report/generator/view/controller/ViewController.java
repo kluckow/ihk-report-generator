@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import ihk.report.generator.doc.DocWriter;
 import ihk.report.generator.excel.ExcelReader;
 import ihk.report.generator.util.FileUtils;
 import ihk.report.generator.view.util.dialogs.ChooseDialogHelper;
@@ -28,6 +29,9 @@ public class ViewController implements Initializable {
 		System.out.println("init view...");
 		
 		configureComponents();
+		
+		DocWriter docWriter = new DocWriter();
+		docWriter.readCoverpageTest();
 	}
 	
 	private void configureComponents() {
