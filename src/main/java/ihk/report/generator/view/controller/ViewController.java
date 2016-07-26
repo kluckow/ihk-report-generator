@@ -22,40 +22,28 @@ public class ViewController implements Initializable {
 	 */
 	@FXML
 	private TextField inputCoverLastName;
-	
 	@FXML
 	private TextField inputCoverFirstName;
-	
 	@FXML
 	private TextField inputCoverBirthday;
-	
 	@FXML
 	private TextField inputCoverBirthLocation;
-	
 	@FXML
 	private TextField inputCoverPostcode;
-	
 	@FXML
 	private TextField inputCoverCity;
-	
 	@FXML
 	private TextField inputCoverStreet;
-	
 	@FXML
 	private TextField inputCoverStreetNr;
-	
 	@FXML
 	private TextField inputCoverProfession;
-	
 	@FXML
 	private TextField inputCoverStartDate;
-	
 	@FXML
 	private TextField inputCoverEndDate;
-	
 	@FXML
 	private TextField inputCoverCompany;
-	
 	@FXML
 	private Button btnCoverGenerateCover;
 	
@@ -64,7 +52,6 @@ public class ViewController implements Initializable {
 	 */
 	@FXML
 	private Button btnSearchExcelDirectory;
-	
 	@FXML
 	private TextField inputExcelDirectory;
 	
@@ -78,6 +65,7 @@ public class ViewController implements Initializable {
 		
 		configureComponents();
 		
+		// TODO: remove when done with testing
 //		DocWriter docWriter = new DocWriter();
 //		docWriter.readCoverpageTest();
 	}
@@ -88,7 +76,7 @@ public class ViewController implements Initializable {
 	private void configureComponents() {
 
 		/**
-		 * Titled Pane 1 (coverpage)
+		 * Titled Pane 1 (coverpage form)
 		 */
 		this.btnCoverGenerateCover.setOnAction(e -> {
 			e.consume();
@@ -98,7 +86,7 @@ public class ViewController implements Initializable {
 			// TODO: on success - ask the user to keep/reset form data
 		});
 		/**
-		 * Titled Pane 2 (exceldir)
+		 * Titled Pane 2 (exceldir chooser)
 		 */
 		this.btnSearchExcelDirectory.setOnAction(e -> {
 			e.consume();
@@ -113,6 +101,9 @@ public class ViewController implements Initializable {
 	
 	/**
 	 * Process selected dir.
+	 * 
+	 * Notifies the user when there are no
+	 * excel files inside the chosen directory.
 	 *
 	 * @param dir the dir
 	 */
@@ -132,6 +123,8 @@ public class ViewController implements Initializable {
 				new NotificationWindow("DEBUG", "Following formats found: " + fileFormats.toString().substring(1, fileFormats.toString().length() - 1));
 				this.inputExcelDirectory.setText(dir.getAbsolutePath());
 			} else {
+				// notifies the user that there are no excel files inside the chosen directory
+				// TODO: exceldir->invalid (for weekly reports)
 				new NotificationWindow("Information", "The selected directory does not contain any .xls/.xlsx files!");
 			}
 		}
