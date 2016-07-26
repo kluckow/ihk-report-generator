@@ -151,7 +151,7 @@ public class ExcelReader {
 					Date date = worksheet.getRow(row).getCell(index).getDateCellValue();
 //					date = date.substring(0, 10);
 //					entry[row-1].setDatum(date);
-					System.out.println(date.toLocaleString().substring(0, 10));
+//					System.out.println(date.toLocaleString().substring(0, 10));
 					break;
 				case (5):
 					// define fullName
