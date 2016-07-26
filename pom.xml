@@ -10,34 +10,37 @@
   <url>http://maven.apache.org</url>
   
   <properties>
+    <project.build.javaVersion>1.8</project.build.javaVersion>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <poi.version>3.14</poi.version>
+    <log4j.version>2.6.2</log4j.version>
   </properties>
   
   <dependencies>
     <dependency>
        <groupId>org.apache.poi</groupId>
        <artifactId>poi</artifactId>
-       <version>3.14</version>
+       <version>${poi.version}</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.apache.poi</groupId>
+    	<artifactId>poi-scratchpad</artifactId>
+    	<version>${poi.version}</version>
     </dependency>
     <dependency>
 	    <groupId>org.apache.logging.log4j</groupId>
 	    <artifactId>log4j-api</artifactId>
-	    <version>2.6.2</version>
+	    <version>${log4j.version}</version>
     </dependency>
     <dependency>
         <groupId>org.apache.logging.log4j</groupId>
         <artifactId>log4j-core</artifactId>
-        <version>2.6.2</version>
+        <version>${log4j.version}</version>
     </dependency>
     <dependency>
        <groupId>org.slf4j</groupId>
        <artifactId>slf4j-simple</artifactId>
        <version>1.7.21</version>
-    </dependency>
-    <dependency>
-    	<groupId>org.apache.poi</groupId>
-    	<artifactId>poi-scratchpad</artifactId>
-    	<version>3.14</version>
     </dependency>
   </dependencies>
     <build>
@@ -47,8 +50,8 @@
             <artifactId>maven-compiler-plugin</artifactId>
             <version>3.5.1</version>
             <configuration>
-                <source>1.8</source>
-                <target>1.8</target>
+                <source>${project.build.javaVersion}</source>
+                <target>${project.build.javaVersion}</target>
             </configuration>
         </plugin>
         <plugin>
