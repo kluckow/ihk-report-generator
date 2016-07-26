@@ -17,12 +17,60 @@ import javafx.scene.control.*;
 @SuppressWarnings("restriction")
 public class ViewController implements Initializable {
 
+	/**
+	 * Components in TitledPane 1 for the form for the coverpage
+	 */
+	@FXML
+	private TextField inputCoverLastName;
+	
+	@FXML
+	private TextField inputCoverFirstName;
+	
+	@FXML
+	private TextField inputCoverBirthday;
+	
+	@FXML
+	private TextField inputCoverBirthLocation;
+	
+	@FXML
+	private TextField inputCoverPostcode;
+	
+	@FXML
+	private TextField inputCoverCity;
+	
+	@FXML
+	private TextField inputCoverStreet;
+	
+	@FXML
+	private TextField inputCoverStreetNr;
+	
+	@FXML
+	private TextField inputCoverProfession;
+	
+	@FXML
+	private TextField inputCoverStartDate;
+	
+	@FXML
+	private TextField inputCoverEndDate;
+	
+	@FXML
+	private TextField inputCoverCompany;
+	
+	@FXML
+	private Button btnCoverGenerateCover;
+	
+	/**
+	 * Components in TitledPane 2 for choosing the directory containing .xls files
+	 */
 	@FXML
 	private Button btnSearchExcelDirectory;
 	
 	@FXML
 	private TextField inputExcelDirectory;
 	
+	/* (non-Javadoc)
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
@@ -30,20 +78,44 @@ public class ViewController implements Initializable {
 		
 		configureComponents();
 		
-		DocWriter docWriter = new DocWriter();
-		docWriter.readCoverpageTest();
+//		DocWriter docWriter = new DocWriter();
+//		docWriter.readCoverpageTest();
 	}
 	
+	/**
+	 * Configure components.
+	 */
 	private void configureComponents() {
 
+		/**
+		 * Titled Pane 1 (coverpage)
+		 */
+		this.btnCoverGenerateCover.setOnAction(e -> {
+			e.consume();
+			System.out.println("Validate form and create coverpage as .doc file.");
+			// TODO: validateCoverpageForm();
+			// TODO: createCoverpage();
+			// TODO: on success - ask the user to keep/reset form data
+		});
+		/**
+		 * Titled Pane 2 (exceldir)
+		 */
 		this.btnSearchExcelDirectory.setOnAction(e -> {
 			e.consume();
-			System.out.println("test");
+			System.out.println("Opening DirectoryChooser for exceldir.");
 			File excelDir = new ChooseDialogHelper("Verzeichnisauswahl für Excel-Dateien (.xls/.xslx)").openDirectoryChooser();
 			processSelectedDir(excelDir);
 		});
+		/**
+		 * Titled Pane 3 (TODO: what is in third pane)
+		 */
 	}
 	
+	/**
+	 * Process selected dir.
+	 *
+	 * @param dir the dir
+	 */
 	private void processSelectedDir(File dir) {
 		
 		if (dir == null) {

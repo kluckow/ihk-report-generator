@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -29,19 +30,108 @@
             </MenuBar>
             <Accordion prefHeight="593.0" prefWidth="800.0">
               <panes>
-                <TitledPane text="Schritt 1: Verzeichnis für Excel-Dateien auswählen" underline="true">
+                <TitledPane text="Schritt 1: Adresse, Firma, etc. auswählen" underline="true">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <AnchorPane>
                            <children>
-                              <TextField fx:id="inputExcelDirectory" editable="false" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="300.0" />
-                              <Button fx:id="btnSearchExcelDirectory" layoutX="314.0" layoutY="14.0" maxWidth="200.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Durchsuchen" />
+                              <GridPane hgap="10.0" layoutX="120.0" layoutY="44.0" style="-fx-border: 1px; -fx-border-color: #000000;">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="80.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="80.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="NEVER" />
+                                  <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <TextField fx:id="inputCoverLastName" prefHeight="25.0" prefWidth="140.0" promptText="Name" GridPane.columnIndex="1">
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                    </TextField>
+                                    <TextField fx:id="inputCoverFirstName" prefHeight="25.0" prefWidth="140.0" promptText="Vorname" GridPane.columnIndex="3" />
+                                    <Label text="Name:" />
+                                    <Label text="Vorname" GridPane.columnIndex="2">
+                                       <GridPane.margin>
+                                          <Insets left="20.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label text="Geboren am:" GridPane.rowIndex="1" />
+                                    <Label text="PLZ:" GridPane.rowIndex="2" />
+                                    <Label text="Ausbildungsberuf:" GridPane.rowIndex="4" />
+                                    <TextField fx:id="inputCoverProfession" prefHeight="25.0" prefWidth="133.0" promptText="(Offizielle Bezeichnung)" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
+                                    <Label text="Ausbildungsbeginn:" GridPane.rowIndex="5" />
+                                    <Label text="Ausbildungsende:" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                       <GridPane.margin>
+                                          <Insets left="20.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <TextField fx:id="inputCoverStartDate" prefHeight="25.0" prefWidth="140.0" promptText="01.08.2014" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <TextField fx:id="inputCoverEndDate" prefHeight="25.0" prefWidth="140.0" promptText="01.08.2017" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                                    <TextField fx:id="inputCoverCompany" prefHeight="25.0" prefWidth="140.0" promptText="Beispiellos AG" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6" />
+                                    <Label text="Ausbildungsbetrieb:" GridPane.rowIndex="6" />
+                                    <TextField fx:id="inputCoverPostcode" prefHeight="25.0" prefWidth="140.0" promptText="40321" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label text="Wohnort:" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                       <GridPane.margin>
+                                          <Insets left="20.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <TextField fx:id="inputCoverCity" prefHeight="25.0" prefWidth="140.0" promptText="Wohnort" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                    <TextField fx:id="inputCoverBirthday" prefHeight="25.0" prefWidth="140.0" promptText="12.06.1990" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Label text="Geburtsort:" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                       <GridPane.margin>
+                                          <Insets left="20.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <TextField fx:id="inputCoverBirthLocation" prefHeight="25.0" prefWidth="140.0" promptText="Geburtsort" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                    <Label text="Strasse/Hausnr.:" GridPane.rowIndex="3" />
+                                    <TextField fx:id="inputCoverStreet" prefHeight="25.0" prefWidth="140.0" promptText="Strasse" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                                    <TextField fx:id="inputCoverStreetNr" prefHeight="25.0" prefWidth="50.0" promptText="Nr." GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                    <Button fx:id="btnCoverGenerateCover" mnemonicParsing="false" text="Erstelle Deckblatt" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                                 </padding>
+                              </GridPane>
                            </children>
+                           <padding>
+                              <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                           </padding>
                         </AnchorPane>
                   </content>
                 </TitledPane>
-                <TitledPane text="Schritt 2: " underline="true">
+                <TitledPane text="Schritt 2: Verzeichnis für Excel-Dateien auswählen" underline="true">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border: 1px;">
+                           <children>
+                              <GridPane layoutX="104.0" layoutY="70.0" style="-fx-border: 1px; -fx-border-color: #000000;">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <TextField fx:id="inputExcelDirectory" editable="false" prefHeight="25.0" prefWidth="300.0" />
+                                    <Button fx:id="btnSearchExcelDirectory" maxWidth="200.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Durchsuchen" GridPane.columnIndex="1" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                                 </padding>
+                              </GridPane>
+                           </children></AnchorPane>
                   </content>
                 </TitledPane>
                 <TitledPane text="untitled 3" underline="true">
