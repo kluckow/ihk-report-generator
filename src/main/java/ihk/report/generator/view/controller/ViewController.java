@@ -91,7 +91,7 @@ public class ViewController implements Initializable {
 		this.btnSearchExcelDirectory.setOnAction(e -> {
 			e.consume();
 			System.out.println("Opening DirectoryChooser for exceldir.");
-			File excelDir = new ChooseDialogHelper("Verzeichnisauswahl f�r Excel-Dateien (.xls/.xslx)").openDirectoryChooser();
+			File excelDir = new ChooseDialogHelper("Verzeichnisauswahl für Excel-Dateien (.xls/.xslx)").openDirectoryChooser();
 			processSelectedDir(excelDir);
 		});
 		/**
@@ -125,7 +125,7 @@ public class ViewController implements Initializable {
 			} else {
 				// notifies the user that there are no excel files inside the chosen directory
 				// TODO: exceldir->invalid (for weekly reports)
-				new NotificationWindow("Information", "The selected directory does not contain any .xls/.xlsx files!");
+				new NotificationWindow("Information", "Das ausgewählte Verzeichnis enthält keine Excel-Dateien!");
 			}
 		}
 	}
