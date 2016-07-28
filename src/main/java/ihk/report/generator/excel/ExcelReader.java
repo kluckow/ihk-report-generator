@@ -69,6 +69,9 @@ public class ExcelReader {
 		 * 10. put week into .doc file 
 		 */
 		processExcelFiles();
+		
+		
+		
 		FileInputStream fis;
 		try {
 			fis = new FileInputStream("testdata/test.xls");
@@ -261,8 +264,22 @@ public class ExcelReader {
 	}
 	
 	private Week processWorksheet(HSSFSheet worksheet) {
-		// TODO Auto-generated method stub
-		return null;
+		/**
+		 * TODO: process HSSFSheet "Zeitnachweise" to create entire Week
+		 * 
+		 * pseudo:
+		 * - iterate over rows
+		 * - create Record for each row by setting its properties by relevant columns
+		 * => (1 - Vorgangszusammenfassung, 2 - Stunden, 3 - Arbeitsdatum, 17 - Arbeitsbeschreibung)
+		 * - handle formatting before putting into Record
+		 * - merge Records by Arbeitsdatum(3)
+		 * - create list of days by merging Records by Vorgangszusammenfassung
+		 * - create week by list of days
+		 * - return the week
+		 */
+		
+		Week week = null;
+		return week;
 	}
 	public void loadExcelFiles(File dir) {
 		this.xlsFiles = new FileUtils().getFilesByFormat(dir, XLS_FILEFORMAT);
