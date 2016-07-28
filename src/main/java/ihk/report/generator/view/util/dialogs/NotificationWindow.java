@@ -33,10 +33,10 @@ public class NotificationWindow {
 	private static final int HEIGHT_CONFIRM_DIALOG = 200;
 	
 	/** The Constant CSS_STYLE_APPLICATION_BACKGROUND. */
-	private static final String CSS_STYLE_APPLICATION_BACKGROUND = "-fx-background-color: #DFF2FA";
+//	private static final String CSS_STYLE_APPLICATION_BACKGROUND = "-fx-background-color: #DFF2FA";
 	
 	/** The Constant CSS_STYLE_NOTIFICATION_BACKGROUND. */
-	private static final String CSS_STYLE_NOTIFICATION_BACKGROUND = "-fx-background-color: #DFF2FA";
+//	private static final String CSS_STYLE_NOTIFICATION_BACKGROUND = "-fx-background-color: #DFF2FA";
 
 	/** The Constant CSS_CONTENT_INSETS. */
 	private static final Insets CSS_CONTENT_INSETS = new Insets(10);
@@ -81,7 +81,7 @@ public class NotificationWindow {
 		
 		Button okButton = new Button(OK_BUTTON_TEXT);
 		okButton.setOnAction(e -> {
-			e.consume();
+//			e.consume();
 			window.close();
 		});
 		HBox bottomHorizontalBox = new HBox();
@@ -92,11 +92,11 @@ public class NotificationWindow {
 		vBox.setAlignment(Pos.CENTER);
 		vBox.setSpacing(20);
 		vBox.getChildren().addAll(topHorizontalBox, bottomHorizontalBox);
-		vBox.setStyle(CSS_STYLE_NOTIFICATION_BACKGROUND);
+//		vBox.setStyle(CSS_STYLE_NOTIFICATION_BACKGROUND);
 		
 		StackPane pane = new StackPane();
 		pane.setPadding(CSS_CONTENT_INSETS);
-		pane.setStyle(CSS_STYLE_APPLICATION_BACKGROUND);
+//		pane.setStyle(CSS_STYLE_APPLICATION_BACKGROUND);
 		pane.getChildren().add(vBox);
 		
 		Scene scene = new Scene(pane);
