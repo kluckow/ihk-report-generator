@@ -2,7 +2,6 @@ package ihk.report.generator.util;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.util.Arrays;
@@ -40,6 +39,7 @@ public class FileUtilsTest {
      * - given format list is empty or null
      * - multiple files of the same format exist
      * - directory is empty
+     * - never return null
      * - only return the matched formats
      */
     @Test
@@ -49,9 +49,9 @@ public class FileUtilsTest {
         List<String> formats = Arrays.asList(".txt", ".xls", ".bak", "lala");
         List<String> expectedFormats = Arrays.asList(".txt", ".xls");
         
-        assertTrue(new FileUtils().getExistingFormatsInDirByFormats(getTestDirectory(false), nullFormats) == null);
+        assertThat(new FileUtils().getExistingFormatsInDirByFormats(getTestDirectory(false), nullFormats).isEmpty(), is(true));
         assertThat(new FileUtils().getExistingFormatsInDirByFormats(getTestDirectory(false), formats), is(expectedFormats));
-        assertTrue(new FileUtils().getExistingFormatsInDirByFormats(getTestDirectory(true), formats) == null);
+        assertThat(new FileUtils().getExistingFormatsInDirByFormats(getTestDirectory(true), formats).isEmpty(), is(true));
     }
 
     /**
