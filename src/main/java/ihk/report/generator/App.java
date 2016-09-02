@@ -3,6 +3,7 @@ package ihk.report.generator;
 import java.io.IOException;
 import java.net.URL;
 
+import ihk.report.generator.view.util.dialogs.CloseProgramDialog;
 import ihk.report.generator.view.util.dialogs.NotificationWindow;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +14,6 @@ import javafx.stage.Stage;
 /**
  * The Class App.
  */
-@SuppressWarnings("restriction")
 public class App extends Application {
 
     /**
@@ -62,10 +62,10 @@ public class App extends Application {
 		Scene scene = new Scene(page);
 		primaryStage.setOnCloseRequest(e -> {
 			e.consume();
-			primaryStage.close();
+			new CloseProgramDialog(primaryStage);
 		});
-		primaryStage.setMinHeight(600);
-		primaryStage.setMinWidth(800);
+		primaryStage.setMinWidth(1024);
+		primaryStage.setMinHeight(768);
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("IHK Report Generator");
 		primaryStage.show();

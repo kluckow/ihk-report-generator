@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 
 import ihk.report.generator.excel.ExcelReader;
 import ihk.report.generator.util.FileUtils;
-import ihk.report.generator.view.util.dialogs.ChooseDialogHelper;
+import ihk.report.generator.view.util.dialogs.DialogHelper;
 import ihk.report.generator.view.util.dialogs.NotificationWindow;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,7 +15,9 @@ import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 
-@SuppressWarnings("restriction")
+/**
+ * The Class ViewController.
+ */
 public class ViewController implements Initializable {
 
 	/**
@@ -78,7 +80,6 @@ public class ViewController implements Initializable {
 		System.out.println("init view...");
 		configureComponents();
 		
-		// TODO: remove when done with testing
 //		DocWriter docWriter = new DocWriter();
 //		docWriter.readCoverpageTest();
 	}
@@ -92,7 +93,6 @@ public class ViewController implements Initializable {
 		 * Global MenuBar
 		 */
 		this.menuItemCloseProgram.setOnAction(e -> {
-//			e.consume();
 			System.out.println("Closing Program...");
 			// TODO: "Möchten sie das Programm wirklich schließen? dialog when accordion (any form) is filled with data
 			Stage stage = (Stage) mainPain.getScene().getWindow();
@@ -103,19 +103,23 @@ public class ViewController implements Initializable {
 		 * Titled Pane 1 (coverpage form)
 		 */
 		this.btnCoverGenerateCover.setOnAction(e -> {
-//			e.consume();
+		    
+		    new NotificationWindow("Dummy", "Noch nicht implementiert!");
+		    
 			System.out.println("Validate form and create coverpage as .doc file.");
-			// TODO: validateCoverpageForm();
-			// TODO: createCoverpage();
-			// TODO: on success - ask the user to keep/reset form data
+			
+			validateCoverpageForm();
+			
+			if (createCoverpage()) {
+			    // TODO: new YesNoDialog() to ask the user to keep/reset form data 
+			}
 		});
 		/**
 		 * Titled Pane 2 (exceldir chooser)
 		 */
 		this.btnSearchExcelDirectory.setOnAction(e -> {
-//			e.consume();
 			System.out.println("Opening DirectoryChooser for exceldir.");
-			File excelDir = new ChooseDialogHelper("Verzeichnisauswahl für Excel-Dateien (.xls/.xslx)").openDirectoryChooser();
+			File excelDir = new DialogHelper("Verzeichnisauswahl für Excel-Dateien (.xls/.xslx)").openDirectoryChooser();
 			processSelectedDir(excelDir);
 		});
 		/**
@@ -123,7 +127,16 @@ public class ViewController implements Initializable {
 		 */
 	}
 
-	/**
+    private boolean createCoverpage() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    private void validateCoverpageForm() {
+        // TODO Auto-generated method stub
+    }
+
+    /**
 	 * Process selected dir.
 	 * 
 	 * Notifies the user when there are no
@@ -140,7 +153,7 @@ public class ViewController implements Initializable {
 			System.out.println("dir is: " + dir.getAbsolutePath());
 			
 			List<String> fileFormats = new FileUtils().getExistingFormatsInDirByFormats(dir, new ExcelReader().getExcelFileFormats());
-			if (fileFormats != null) {
+			if (!fileFormats.isEmpty()) {
 				for (String fileFormat : fileFormats) {
 					System.out.println(fileFormat);
 				}

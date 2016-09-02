@@ -6,13 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
 
-import javax.print.attribute.standard.PrinterLocation;
-
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -115,12 +110,6 @@ public class ExcelReader {
 			}
 		}
 		
-		// counters for differencing cells
-		int numericCounter = 0;
-		int stringCounter = 0;
-//		for each no-header row, create entry, so one less than rows existing
-//		Entry[] entry = new Entry[rowCount-1];
-		
 		// create Entry objects
 		// iterate over rows
 		// starting at 1, because headers are in row = 0
@@ -131,7 +120,7 @@ public class ExcelReader {
 			
 			for (int index: relevantRowIndices) {
 				
-				int cellType = worksheet.getRow(row).getCell(index).getCellType();
+				worksheet.getRow(row).getCell(index).getCellType();
 //				print index of cell
 //				System.out.print(worksheet.getRow(row).getCell(index).getCellType() + " ");
 				switch (index) {
@@ -150,8 +139,7 @@ public class ExcelReader {
 					System.out.println(stunden);
 					break;
 				case (3):
-					// define datum
-					Date date = worksheet.getRow(row).getCell(index).getDateCellValue();
+                        worksheet.getRow(row).getCell(index).getDateCellValue();
 //					date = date.substring(0, 10);
 //					entry[row-1].setDatum(date);
 //					System.out.println(date.toLocaleString().substring(0, 10));
@@ -160,9 +148,9 @@ public class ExcelReader {
 					// define fullName
 					String fullName = worksheet.getRow(row).getCell(index).getStringCellValue();
 					//  defin firstName and lastName by splitting by space character
-					String[] tmp = fullName.split(" ");
-					String firstName = tmp[0];
-					String lastName = tmp[1];
+					@SuppressWarnings("unused")
+                    String[] tmp = fullName.split(" ");
+                        
 
 //					entry[row-1].setFullName(fullName);
 //					entry[row-1].setFirstName(firstName);
