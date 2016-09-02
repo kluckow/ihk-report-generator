@@ -5,18 +5,32 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import ihk.report.generator.doc.DocWriter;
 import ihk.report.generator.excel.ExcelReader;
 import ihk.report.generator.util.FileUtils;
 import ihk.report.generator.view.util.dialogs.ChooseDialogHelper;
 import ihk.report.generator.view.util.dialogs.NotificationWindow;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.stage.Stage;
 import javafx.scene.control.*;
+import javafx.scene.layout.StackPane;
 
 @SuppressWarnings("restriction")
 public class ViewController implements Initializable {
 
+	/**
+	 * Root component
+	 * Used to handle stage
+	 */
+	@FXML
+	private StackPane mainPain;
+	
+	/**
+	 * Components in global MenuBar
+	 */
+	@FXML
+	private MenuItem menuItemCloseProgram;
+	
 	/**
 	 * Components in TitledPane 1 for the form for the coverpage
 	 */
@@ -62,7 +76,6 @@ public class ViewController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		System.out.println("init view...");
-		
 		configureComponents();
 		
 		// TODO: remove when done with testing
@@ -76,10 +89,21 @@ public class ViewController implements Initializable {
 	private void configureComponents() {
 
 		/**
+		 * Global MenuBar
+		 */
+		this.menuItemCloseProgram.setOnAction(e -> {
+//			e.consume();
+			System.out.println("Closing Program...");
+			// TODO: "Möchten sie das Programm wirklich schließen? dialog when accordion (any form) is filled with data
+			Stage stage = (Stage) mainPain.getScene().getWindow();
+		    stage.close();
+		});
+		
+		/**
 		 * Titled Pane 1 (coverpage form)
 		 */
 		this.btnCoverGenerateCover.setOnAction(e -> {
-			e.consume();
+//			e.consume();
 			System.out.println("Validate form and create coverpage as .doc file.");
 			// TODO: validateCoverpageForm();
 			// TODO: createCoverpage();
@@ -89,7 +113,7 @@ public class ViewController implements Initializable {
 		 * Titled Pane 2 (exceldir chooser)
 		 */
 		this.btnSearchExcelDirectory.setOnAction(e -> {
-			e.consume();
+//			e.consume();
 			System.out.println("Opening DirectoryChooser for exceldir.");
 			File excelDir = new ChooseDialogHelper("Verzeichnisauswahl für Excel-Dateien (.xls/.xslx)").openDirectoryChooser();
 			processSelectedDir(excelDir);
@@ -98,7 +122,7 @@ public class ViewController implements Initializable {
 		 * Titled Pane 3 (TODO: what is in third pane)
 		 */
 	}
-	
+
 	/**
 	 * Process selected dir.
 	 * 
