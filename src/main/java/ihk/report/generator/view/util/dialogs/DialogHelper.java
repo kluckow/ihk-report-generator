@@ -5,15 +5,27 @@ import java.io.File;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
-@SuppressWarnings("restriction")
-public class ChooseDialogHelper {
+/**
+ * The Class ChooseDialogHelper.
+ */
+public class DialogHelper {
 
 	private String title;
 	
-	public ChooseDialogHelper(String title) {
+	/**
+	 * Instantiates a new dialog helper.
+	 *
+	 * @param title the title
+	 */
+	public DialogHelper(String title) {
 		this.title = title;
 	}
 	
+	/**
+	 * Open directory chooser.
+	 *
+	 * @return the file
+	 */
 	public File openDirectoryChooser() {
 		
 		DirectoryChooser dcExcel = new DirectoryChooser();
@@ -22,6 +34,11 @@ public class ChooseDialogHelper {
 		return dcExcel.showDialog(null);
 	}
 	
+	/**
+	 * Open file chooser.
+	 *
+	 * @return the file
+	 */
 	public File openFileChooser() {
 		
 		FileChooser fcExcel = new FileChooser();
