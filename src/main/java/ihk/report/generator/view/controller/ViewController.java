@@ -115,7 +115,7 @@ public class ViewController implements Initializable {
 		} else {
 			System.out.println("dir is: " + dir.getAbsolutePath());
 			
-			List<String> fileFormats = new FileUtils().getFormatsInDir(dir, new ExcelReader().getExcelFileFormats());
+			List<String> fileFormats = new FileUtils().getExistingFormatsInDirByFormats(dir, new ExcelReader().getExcelFileFormats());
 			if (fileFormats != null) {
 				for (String fileFormat : fileFormats) {
 					System.out.println(fileFormat);

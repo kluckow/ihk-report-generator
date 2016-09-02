@@ -4,15 +4,28 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Class FileUtils.
+ */
 public class FileUtils {
 
-	// TODO: unit test
-	public List<String> getFormatsInDir(File dir, List<String> formatsToCheck) {
+	/**
+	 * Gets the existing formats in dir by formats.
+	 *
+	 * @param dir the dir
+	 * @param formatsToCheck the formats to check
+	 * @return the existing formats in dir by formats
+	 */
+	public List<String> getExistingFormatsInDirByFormats(File dir, List<String> formatsToCheck) {
 		
-		List<String> fileFormatsFound = new ArrayList<String>();
+	    if (formatsToCheck == null || formatsToCheck.isEmpty()) {
+	        return formatsToCheck;
+	    } 
+	    
+		List<String> fileFormatsFound = new ArrayList<>();
 		for (String format : formatsToCheck) {
 			for (File file : dir.listFiles()) {
-				// ignore directories
+				// ignore directories, dont check recursively currently
 				if (file.isDirectory()) {
 					continue;
 				} else if (fileFormatsFound.contains(format)) {
@@ -32,10 +45,19 @@ public class FileUtils {
 		return fileFormatsFound;
 	}
 	
-	// TODO: unit test
+	/**
+	 * Gets the files by format.
+	 *
+	 * @param dir the dir
+	 * @param format the format
+	 * @return the files by format
+	 */
 	public List<File> getFilesByFormat(File dir, String format) {
-		
-		List<File> filesFound = new ArrayList<File>();
+	    
+	    if ("".equals(format) || format == null) {
+	        return new ArrayList<>();
+	    }
+		List<File> filesFound = new ArrayList<>();
 		for (File file : dir.listFiles()) {
 			if (file.isDirectory() || !file.getName().endsWith(format)) {
 				continue;
