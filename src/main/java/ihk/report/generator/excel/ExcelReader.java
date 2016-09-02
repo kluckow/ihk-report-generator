@@ -84,8 +84,8 @@ public class ExcelReader {
 		
 		List<String> relevantHeaders = Configuration.relevantHeaders;
 		
-//		System.out.println("Das Worksheet hat " + rowCount + " Zeilen");
-//		System.out.println("Das Worksheet hat " + cellCount + " Spalten");
+		System.out.println("Das Worksheet hat " + rowCount + " Zeilen");
+		System.out.println("Das Worksheet hat " + cellCount + " Spalten");
 		
 //		HSSFRow currRow;
 		
@@ -189,51 +189,6 @@ public class ExcelReader {
 			e.printStackTrace();
 		}
 		
-		
-		
-//		System.out.print("Die relevanten Indices sind:");
-//		for (int colIndex: relevantRowIndices) {
-//			System.out.print(" " + colIndex);
-//		}
-//		System.out.println();
-		
-		
-		
-		
-		
-//		for (int row = 0; row < rowCount; row++) {
-//			
-//			currRow = worksheet.getRow(row);
-//			System.out.println("Zeile " + (row + 1) + ":");
-//			
-//			
-//			
-//			for (int cell = 0; cell < cellCount; cell++) {
-//				
-//				System.out.print("\t");
-////				for worked time info
-//				if (row >= 1) {
-//					// if header
-//					if (row == 1) {
-//						System.out.println(currRow.getCell(cell).getNumericCellValue());
-//					} else if (cell == 2) {
-//						System.out.println(currRow.getCell(cell).getDateCellValue());
-//					} else {
-//						System.out.println(currRow.getCell(cell).getStringCellValue());
-//					}
-//					
-//				} else {
-//					for (String header: relevantHeaders) {
-//						if (header.contains(currRow.getCell(cell).getStringCellValue())) {
-//							System.out.println(currRow.getCell(cell).getStringCellValue());
-//						}
-//					}
-//				}
-//				
-//			}
-//		}
-//		HSSFCell cellA1 = row1.getCell(6);
-//		System.out.println(cellA1.getStringCellValue());
 	}
 	private void processExcelFiles() {
 		
