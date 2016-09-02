@@ -19,12 +19,14 @@ public class FileUtils {
 	public List<String> getExistingFormatsInDirByFormats(File dir, List<String> formatsToCheck) {
 		
 	    if (formatsToCheck == null || formatsToCheck.isEmpty()) {
-	        return formatsToCheck;
+	        return new ArrayList<>();
 	    } 
 	    
 		List<String> fileFormatsFound = new ArrayList<>();
 		for (String format : formatsToCheck) {
+		    
 			for (File file : dir.listFiles()) {
+			    
 				// ignore directories, dont check recursively currently
 				if (file.isDirectory()) {
 					continue;
@@ -41,7 +43,7 @@ public class FileUtils {
 			}
 		}
 		// make sure to return null if no relevant formats found
-		fileFormatsFound = fileFormatsFound.isEmpty() ? null : fileFormatsFound;
+		fileFormatsFound = fileFormatsFound.isEmpty() ? new ArrayList<>() : fileFormatsFound;
 		return fileFormatsFound;
 	}
 	
