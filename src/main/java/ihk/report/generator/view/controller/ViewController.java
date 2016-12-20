@@ -2,9 +2,15 @@ package ihk.report.generator.view.controller;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
+import ihk.report.generator.doc.DocHandler;
 import ihk.report.generator.excel.ExcelReader;
 import ihk.report.generator.util.FileUtils;
 import ihk.report.generator.view.util.dialogs.CloseProgramDialog;
@@ -81,8 +87,19 @@ public class ViewController implements Initializable {
 		System.out.println("init view...");
 		configureComponents();
 		
-//		DocWriter docWriter = new DocWriter();
-//		docWriter.readCoverpageTest();
+		// just for faster test cycles
+		this.inputCoverLastName.setText("Kluckow");
+		this.inputCoverFirstName.setText("Markus");
+		this.datepickerCoverBirthday.getEditor().setText("05.08.1989");
+		this.inputCoverBirthLocation.setText("Düsseldorf");
+		this.inputCoverPostcode.setText("40237");
+		this.inputCoverCity.setText("Düsseldorf");
+		this.inputCoverStreet.setText("Rethelstrasse");
+		this.inputCoverStreetNr.setText("45");
+		this.inputCoverProfession.setText("Software-Entwickler");
+		this.datepickerCoverStartDate.getEditor().setText("01.08.2014");
+		this.datepickerCoverEndDate.getEditor().setText("31.07.2017");
+		this.inputCoverCompany.setText("COMINTO GmbH");
 	}
 	
 	/**
@@ -108,12 +125,19 @@ public class ViewController implements Initializable {
 		    
 			System.out.println("Validate form and create coverpage as .doc file.");
 			
-			validateCoverpageForm();
-			
-			if (createCoverpage()) {
+			if (!validateCoverpageForm()) {
+			    new NotificationWindow("Formular ungültig!", "Bitte überprüfen Sie Ihre Eingaben!");
+			    return;
+			} else if (createCoverpage()) {
 			    // TODO: new YesNoDialog() to ask the user to keep/reset form data 
+			    System.out.println("Successfully created coverpage!");
+			} else {
+			    // TODO: inform the user about failure of creating coverpage 
+			    System.out.println("Could not create coverpage!");
 			}
+			
 		});
+		
 		/**
 		 * Titled Pane 2 (exceldir chooser)
 		 */
@@ -122,19 +146,39 @@ public class ViewController implements Initializable {
 			File excelDir = new DialogHelper("Verzeichnisauswahl für Excel-Dateien (.xls/.xslx)").openDirectoryChooser();
 			processSelectedDir(excelDir);
 		});
+		
 		/**
 		 * Titled Pane 3 (TODO: what is in third pane)
 		 */
 	}
 
     private boolean createCoverpage() {
-        // TODO Auto-generated method stub
+        DocHandler docHandler = new DocHandler();
+        docHandler.setupCoverpage(coverFormToMap());
         return false;
+    }
+    
+    private Map<String, String> coverFormToMap() {
+        
+        Map<String, String> coverFormMap = new HashMap<>();
+        
+        // validation implicates that form elements are not null
+        coverFormMap.put(DocHandler.PLACEHOLDER_LAST_NAME, this.inputCoverLastName.getText().trim());
+        coverFormMap.put(DocHandler.PLACEHOLDER_FIRST_NAME, this.inputCoverFirstName.getText().trim());
+        coverFormMap.put(DocHandler.PLACEHOLDER_BIRTHDAY, this.datepickerCoverBirthday.getEditor().getText().trim());
+        coverFormMap.put(DocHandler.PLACEHOLDER_BIRTH_LOCATION, this.inputCoverBirthLocation.getText().trim());
+        coverFormMap.put(DocHandler.PLACEHOLDER_POST_CODE, this.inputCoverPostcode.getText().trim() + " " + this.inputCoverCity.getText().trim());
+        coverFormMap.put(DocHandler.PLACEHOLDER_STREET_NR, this.inputCoverStreet.getText().trim() + " " + this.inputCoverStreetNr.getText().trim());
+        coverFormMap.put(DocHandler.PLACEHOLDER_PROFESSION, this.inputCoverProfession.getText().trim());
+        coverFormMap.put(DocHandler.PLACEHOLDER_START_DATE, this.datepickerCoverStartDate.getEditor().getText().trim());
+        coverFormMap.put(DocHandler.PLACEHOLDER_END_DATE, this.datepickerCoverEndDate.getEditor().getText().trim());
+        coverFormMap.put(DocHandler.PLACEHOLDER_COMPANY, this.inputCoverCompany.getText().trim());
+        return coverFormMap;
     }
 
     private boolean validateCoverpageForm() {
         // TODO: Auto-generated method stub
-        return false;
+        return true;
     }
 
     /**

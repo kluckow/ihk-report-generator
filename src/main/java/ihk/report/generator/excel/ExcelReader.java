@@ -12,7 +12,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import ihk.report.generator.doc.DocWriter;
+import ihk.report.generator.doc.DocHandler;
 import ihk.report.generator.excel.unit.Day;
 import ihk.report.generator.excel.unit.Record;
 import ihk.report.generator.excel.unit.Week;
@@ -192,7 +192,7 @@ public class ExcelReader {
 				HSSFSheet worksheet = workbook.getSheet(EXCEL_WORKBOOK_ZEITNACHWEISE);
 				
 				Week week = processWorksheet(worksheet);
-				new DocWriter().createReportFile(week);
+				new DocHandler().createReportFile(week);
 				
 				workbook.close();
 				fis.close();
