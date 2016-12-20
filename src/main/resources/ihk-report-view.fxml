@@ -58,15 +58,15 @@
                                        </GridPane.margin>
                                     </TextField>
                                     <TextField fx:id="inputCoverFirstName" prefHeight="25.0" prefWidth="140.0" promptText="Vorname" GridPane.columnIndex="3" />
-                                    <TextField fx:id="inputCoverBirthday" prefHeight="25.0" prefWidth="140.0" promptText="12.06.1990" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <DatePicker fx:id="datepickerCoverBirthday" prefHeight="25.0" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     <TextField fx:id="inputCoverBirthLocation" prefHeight="25.0" prefWidth="140.0" promptText="Geburtsort" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                     <TextField fx:id="inputCoverPostcode" prefHeight="25.0" prefWidth="140.0" promptText="40321" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     <TextField fx:id="inputCoverCity" prefHeight="25.0" prefWidth="140.0" promptText="Wohnort" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                                     <TextField fx:id="inputCoverStreet" prefHeight="25.0" prefWidth="140.0" promptText="Strasse" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
                                     <TextField fx:id="inputCoverStreetNr" prefHeight="25.0" prefWidth="50.0" promptText="Nr." GridPane.columnIndex="3" GridPane.rowIndex="3" />
                                     <TextField fx:id="inputCoverProfession" prefHeight="25.0" prefWidth="133.0" promptText="(Offizielle Bezeichnung)" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
-                                    <TextField fx:id="inputCoverStartDate" prefHeight="25.0" prefWidth="140.0" promptText="01.08.2014" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                    <TextField fx:id="inputCoverEndDate" prefHeight="25.0" prefWidth="140.0" promptText="01.08.2017" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                                    <DatePicker fx:id="datepickerCoverStartDate" prefHeight="25.0" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <DatePicker fx:id="datepickerCoverEndDate" prefHeight="25.0" prefWidth="140.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
                                     <TextField fx:id="inputCoverCompany" prefHeight="25.0" prefWidth="140.0" promptText="Beispiellos AG" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6" />
                                     <Button fx:id="btnCoverGenerateCover" mnemonicParsing="false" text="Erstelle Deckblatt" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
                                     <Label text="Name:" />

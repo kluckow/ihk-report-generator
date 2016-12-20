@@ -42,7 +42,7 @@ public class ViewController implements Initializable {
 	@FXML
 	private TextField inputCoverFirstName;
 	@FXML
-	private TextField inputCoverBirthday;
+	private DatePicker datepickerCoverBirthday;
 	@FXML
 	private TextField inputCoverBirthLocation;
 	@FXML
@@ -56,9 +56,9 @@ public class ViewController implements Initializable {
 	@FXML
 	private TextField inputCoverProfession;
 	@FXML
-	private TextField inputCoverStartDate;
+	private DatePicker datepickerCoverStartDate;
 	@FXML
-	private TextField inputCoverEndDate;
+	private DatePicker datepickerCoverEndDate;
 	@FXML
 	private TextField inputCoverCompany;
 	@FXML
@@ -132,8 +132,9 @@ public class ViewController implements Initializable {
         return false;
     }
 
-    private void validateCoverpageForm() {
-        // TODO Auto-generated method stub
+    private boolean validateCoverpageForm() {
+        // TODO: Auto-generated method stub
+        return false;
     }
 
     /**
