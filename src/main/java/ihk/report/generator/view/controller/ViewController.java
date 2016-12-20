@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import ihk.report.generator.excel.ExcelReader;
 import ihk.report.generator.util.FileUtils;
+import ihk.report.generator.view.util.dialogs.CloseProgramDialog;
 import ihk.report.generator.view.util.dialogs.DialogHelper;
 import ihk.report.generator.view.util.dialogs.NotificationWindow;
 import javafx.fxml.FXML;
@@ -94,9 +95,8 @@ public class ViewController implements Initializable {
 		 */
 		this.menuItemCloseProgram.setOnAction(e -> {
 			System.out.println("Closing Program...");
-			// TODO: "Möchten sie das Programm wirklich schließen? dialog when accordion (any form) is filled with data
 			Stage stage = (Stage) mainPain.getScene().getWindow();
-		    stage.close();
+			new CloseProgramDialog(stage);
 		});
 		
 		/**
