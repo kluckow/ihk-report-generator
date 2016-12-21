@@ -2,14 +2,10 @@ package ihk.report.generator.view.controller;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
-
 import ihk.report.generator.doc.DocHandler;
 import ihk.report.generator.excel.ExcelReader;
 import ihk.report.generator.util.FileUtils;
@@ -123,7 +119,7 @@ public class ViewController implements Initializable {
 		    
 		    new NotificationWindow("Dummy", "Noch nicht implementiert!");
 		    
-			System.out.println("Validate form and create coverpage as .doc file.");
+			System.out.println("Validate form and create coverpage as .docx file.");
 			
 			if (!validateCoverpageForm()) {
 			    new NotificationWindow("Formular ungültig!", "Bitte überprüfen Sie Ihre Eingaben!");

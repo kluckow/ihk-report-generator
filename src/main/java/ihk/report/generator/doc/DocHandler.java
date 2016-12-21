@@ -1,23 +1,26 @@
 package ihk.report.generator.doc;
 
-import ihk.report.generator.excel.unit.Week;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.poi.hwpf.*;
-import org.apache.poi.hwpf.extractor.WordExtractor;
-import org.apache.poi.hwpf.usermodel.CharacterRun;
-import org.apache.poi.hwpf.usermodel.Paragraph;
-import org.apache.poi.hwpf.usermodel.Range;
-import org.apache.poi.hwpf.usermodel.Section;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableCell;
+import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+
+import ihk.report.generator.excel.unit.Week;
 
 public class DocHandler {
 
@@ -31,164 +34,103 @@ public class DocHandler {
     public static final String PLACEHOLDER_START_DATE = "00.00.0001";
     public static final String PLACEHOLDER_END_DATE = "00.00.0002";
     public static final String PLACEHOLDER_COMPANY = "$company";
-	
-	private static final String OUTPUT_PATH = "C:\\Users\\Markus\\Desktop\\";
-	
-	public void createReportFile(Week week) {
-		
-		   //Blank Document
-//		   HWPFDocument document= new HWPFDocument(); 
-		   //Write the Document in file system
-		FileOutputStream out;
-		try {
-			out = new FileOutputStream(
-					new File(System.getProperty("user.home" + File.separator + "Downloads")));
-		} catch (FileNotFoundException e) {
-			System.out.println("File not found.");
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// document.write(out);
-		// out.close();
-		System.out.println("createdocument.docx written successully");
-	}
-	
-    public void setupCoverpage(final Map<String, String> coverFormMap) {
-        
-      File fileCoverTemplate = new File(getClass().getClassLoader()
-      .getResource("templates/ausbildungsnachweis_deckblatt.doc").getFile());
 
-      String filePath = OUTPUT_PATH
-      + coverFormMap.get(PLACEHOLDER_LAST_NAME).toLowerCase()
-      + "_" + coverFormMap.get(PLACEHOLDER_FIRST_NAME).toLowerCase()
-      + "_berichtsheft_deckblatt.doc";
-      
-      POIFSFileSystem fs = null;
-      try {
-        fs = new POIFSFileSystem(new FileInputStream(fileCoverTemplate.getPath()));            
-          HWPFDocument doc = new HWPFDocument(fs);
+    // private static final String OUTPUT_PATH = "C:\\Users\\Markus\\Desktop\\";
+    private static final String OUTPUT_PATH = "C:\\Users\\kluckow\\Desktop\\";
 
-          // replace placeholders
-          Iterator<Entry<String, String>> it = coverFormMap.entrySet().iterator();
-          while (it.hasNext()) {
-              Map.Entry<String, String> pair = (Map.Entry<String, String>) it.next();
-              doc = replaceText(doc, pair.getKey(), pair.getValue());
-          }
-          // save to new file
-          saveWord(filePath, doc);
-      } catch(FileNotFoundException e){
-          e.printStackTrace();
-      } catch(IOException e){
-          e.printStackTrace();
-      }
-      
-	}
+    public void createReportFile(Week week) {
 
-    /**
-     * @param filePath
-     * @param doc
-     * @throws IOException 
-     */
-    private void saveWord(String filePath, HWPFDocument doc) throws FileNotFoundException, IOException {
-
+        // Write the Document in file system
         FileOutputStream out = null;
         try {
-            System.out.println(filePath);
-            File file = new File(filePath);
-            if (file.createNewFile()) {
-                out = new FileOutputStream(file);
-                doc.write(out);
-            } else {
-                System.out.println("Could not create new coverpage file!");
+            out = new FileOutputStream(
+                new File(System.getProperty("user.home" + File.separator + "Downloads")));
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
+            e.printStackTrace();
+        } finally {
+            // document.write(out);
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-        finally {
-            if (out != null) {
-                out.close();
-            }
-        }
+        System.out.println("createdocument.docx written successully");
     }
 
-    /**
-     * @param doc
-     * @param string
-     * @param string2
-     * @return
-     */
-    private HWPFDocument replaceText(HWPFDocument doc, String findText, String replaceText) {
-        Range r1 = doc.getRange(); 
+    @SuppressWarnings({ "rawtypes", "resource" })
+    public void setupCoverpage(final Map<String, String> coverFormMap) {
 
-        for (int i = 0; i < r1.numSections(); ++i ) { 
-            Section s = r1.getSection(i); 
-            for (int x = 0; x < s.numParagraphs(); x++) { 
-                Paragraph p = s.getParagraph(x); 
-                for (int z = 0; z < p.numCharacterRuns(); z++) { 
-                    CharacterRun run = p.getCharacterRun(z); 
-                    String text = run.text();
-                    if(text.contains(findText)) {
-                        run.replaceText(findText, replaceText);
-                    } 
+        File fileCoverTemplate = new File(getClass().getClassLoader()
+            .getResource("templates/ausbildungsnachweis_deckblatt.docx").getFile());
+        File newFile = new File(OUTPUT_PATH + "\\test.docx");
+        Path newFilePath;
+        try {
+            newFilePath = Files.copy(fileCoverTemplate.toPath(), newFile.toPath(),
+                StandardCopyOption.REPLACE_EXISTING);
+            File targetFile = new File(newFilePath.toString());
+            FileInputStream fis = new FileInputStream(targetFile);
+            
+            XWPFDocument doc = new XWPFDocument(fis);
+            for (XWPFParagraph p : doc.getParagraphs()) {
+                List<XWPFRun> runs = p.getRuns();
+                if (runs != null) {
+                    for (XWPFRun r : runs) {
+                        String text = r.getText(0);
+
+                        Iterator<Entry<String, String>> it1 = coverFormMap.entrySet().iterator();
+                        while (it1.hasNext()) {
+                            Map.Entry pair = it1.next();
+                            if (text != null && text.equals(pair.getKey().toString())) {
+                                System.out.println("text-paragraph: " + text);
+                                System.out.println("key-paragraph: " + pair.getKey().toString() + ", value-paragraph: " + pair.getValue().toString());
+                                text = pair.getValue().toString();
+                                r.setText(text, 0);
+                            }
+                        }
+                        it1.remove();
+                    }
                 }
             }
-        } 
-        return doc;
+
+            for (XWPFTable tbl : doc.getTables()) {
+                for (XWPFTableRow row : tbl.getRows()) {
+                    for (XWPFTableCell cell : row.getTableCells()) {
+                        for (XWPFParagraph p : cell.getParagraphs()) {
+                            for (XWPFRun r : p.getRuns()) {
+                                String text = r.getText(0);
+
+                                Iterator<Entry<String, String>> it2 = coverFormMap.entrySet().iterator();
+                                while (it2.hasNext()) {
+                                    Map.Entry pair = it2.next();
+
+                                    if (text != null && text.contains(pair.getKey().toString())) {
+                                        System.out.println("text-table: " + text);
+                                        System.out.println("key-table: " + pair.getKey().toString() + ", value-table: " + pair.getValue().toString());
+                                        text = text.replaceAll(pair.getKey().toString(), pair.getValue().toString());
+                                        System.out.println("r-before-table: " + r.text());
+                                        r.setText(text);
+                                        System.out.println("r-after-table: " + r.text());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            FileOutputStream fos = new FileOutputStream(targetFile);
+            doc.write(fos);
+            fis.close();
+            fos.close();
+            doc.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
-	
-//    @SuppressWarnings({ "rawtypes", "unchecked" })
-//    public void setupCoverpage(final Map<String, String> coverFormMap) {
-//		
-//		FileInputStream fis;
-//		File file = new File(
-//				getClass().getClassLoader()
-//				.getResource("templates/ausbildungsnachweis_deckblatt.doc").getFile());
-//		try {
-//			
-//			fis = new FileInputStream(file);
-//			HWPFDocument doc = new HWPFDocument(fis);
-//			WordExtractor we = new WordExtractor(doc);
-//			String[] paragraphsOld = we.getParagraphText();
-//			String[] paragraphsNew = new String[paragraphsOld.length]; 
-//			System.out.println("Total no of paragraph " + paragraphsOld.length);
-//			
-//			int counterReplacements = 0;
-//			for (int i = 0; i < paragraphsOld.length; i++) {
-//			    
-//			    System.out.println(paragraphsOld[i]);
-//			    
-//			    Iterator it = coverFormMap.keySet().iterator();
-//			    while (it != null && it.hasNext()) {
-//			        
-//                    Map.Entry<String, String> pair = (Map.Entry<String, String>) it.next();
-//                    if (paragraphsOld[i].contains(pair.getKey())) {
-//                        paragraphsOld[i] = paragraphsOld[i].replace(pair.getKey(), pair.getValue());
-//                        counterReplacements++;
-//                        continue;
-//                    }
-//                    
-//                    if (counterReplacements == AMOUNT_MAXIMUM_PLACEHOLDER) {
-//                        break;
-//                    }
-//			    }
-//			        
-//			}
-//			
-//			fis.close();
-//			
-////			FileOutputStream fos = new FileOutputStream();
-//		    
-//		    File newFile = new File("C:\\Users\\Kluckow\\Desktop\\"
-//		                    + coverFormMap.get(PLACEHOLDER_LAST_NAME)
-//		                    + "_" + coverFormMap.get(PLACEHOLDER_FIRST_NAME)
-//		                    + "_berichtsheft_deckblatt.doc");
-//			POIFSFileSystem poiFS = new POIFSFileSystem(newFile);
-//			HWPFDocument newDoc = new HWPFDocument(poiFS);
-//			
-//			// TODO: create .doc file with paragraphsOld[] 
-//			
-//		} catch (Exception e) {
-//		    // TODO: explain to user
-//			e.printStackTrace();
-//		}
-//	}
-	
+
 }
