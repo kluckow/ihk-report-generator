@@ -86,7 +86,7 @@ public class DocHandler {
                         while (it1.hasNext()) {
                             Map.Entry pair = it1.next();
 
-                            if (text != null && text.contains(pair.getKey().toString())) {
+                            if (text != null && text.contains((String) pair.getKey())) {
                                 text = text.replace((String) pair.getKey(), (String) pair.getValue());
                                 r.setText(text, 0);
                             }
