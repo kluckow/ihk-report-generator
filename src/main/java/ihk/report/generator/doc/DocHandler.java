@@ -31,8 +31,8 @@ public class DocHandler {
     public static final String PLACEHOLDER_POST_CODE = "$postcode";
     public static final String PLACEHOLDER_STREET_NR = "$street_nr";
     public static final String PLACEHOLDER_PROFESSION = "$profession";
-    public static final String PLACEHOLDER_START_DATE = "00.00.0001";
-    public static final String PLACEHOLDER_END_DATE = "00.00.0002";
+    public static final String PLACEHOLDER_START_DATE = "11.11.1970";
+    public static final String PLACEHOLDER_END_DATE = "22.22.1970";
     public static final String PLACEHOLDER_COMPANY = "$company";
 
     // private static final String OUTPUT_PATH = "C:\\Users\\Markus\\Desktop\\";
@@ -61,7 +61,7 @@ public class DocHandler {
         System.out.println("createdocument.docx written successully");
     }
 
-    @SuppressWarnings({ "rawtypes", "resource" })
+    @SuppressWarnings({ "rawtypes"})
     public void setupCoverpage(final Map<String, String> coverFormMap) {
 
         File fileCoverTemplate = new File(getClass().getClassLoader()
@@ -75,23 +75,22 @@ public class DocHandler {
             FileInputStream fis = new FileInputStream(targetFile);
             
             XWPFDocument doc = new XWPFDocument(fis);
+            
+            // this section is currently not used, atleast not for coverpage template
             for (XWPFParagraph p : doc.getParagraphs()) {
                 List<XWPFRun> runs = p.getRuns();
                 if (runs != null) {
                     for (XWPFRun r : runs) {
                         String text = r.getText(0);
-
                         Iterator<Entry<String, String>> it1 = coverFormMap.entrySet().iterator();
                         while (it1.hasNext()) {
                             Map.Entry pair = it1.next();
-                            if (text != null && text.equals(pair.getKey().toString())) {
-                                System.out.println("text-paragraph: " + text);
-                                System.out.println("key-paragraph: " + pair.getKey().toString() + ", value-paragraph: " + pair.getValue().toString());
-                                text = pair.getValue().toString();
+
+                            if (text != null && text.contains(pair.getKey().toString())) {
+                                text = text.replace((String) pair.getKey(), (String) pair.getValue());
                                 r.setText(text, 0);
                             }
                         }
-                        it1.remove();
                     }
                 }
             }
@@ -102,18 +101,16 @@ public class DocHandler {
                         for (XWPFParagraph p : cell.getParagraphs()) {
                             for (XWPFRun r : p.getRuns()) {
                                 String text = r.getText(0);
-
+                                
+                                System.out.println(text);
+                                
                                 Iterator<Entry<String, String>> it2 = coverFormMap.entrySet().iterator();
                                 while (it2.hasNext()) {
                                     Map.Entry pair = it2.next();
 
                                     if (text != null && text.contains(pair.getKey().toString())) {
-                                        System.out.println("text-table: " + text);
-                                        System.out.println("key-table: " + pair.getKey().toString() + ", value-table: " + pair.getValue().toString());
-                                        text = text.replaceAll(pair.getKey().toString(), pair.getValue().toString());
-                                        System.out.println("r-before-table: " + r.text());
-                                        r.setText(text);
-                                        System.out.println("r-after-table: " + r.text());
+                                        text = text.replace((String) pair.getKey(), (String) pair.getValue());
+                                        r.setText(text, 0);
                                     }
                                 }
                             }
