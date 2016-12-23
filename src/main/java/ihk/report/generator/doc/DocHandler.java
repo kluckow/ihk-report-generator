@@ -20,10 +20,18 @@ import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 
+import org.apache.log4j.Logger;
+
 import ihk.report.generator.excel.unit.Week;
 
 public class DocHandler {
 
+    
+    /**
+     * The logger for this class.
+     */
+    private static final Logger LOG = Logger.getLogger(DocHandler.class);
+    
     public static final String PLACEHOLDER_LAST_NAME = "$last_name";
     public static final String PLACEHOLDER_FIRST_NAME = "$first_name";
     public static final String PLACEHOLDER_BIRTHDAY = "$birthday";
@@ -64,6 +72,8 @@ public class DocHandler {
     @SuppressWarnings({ "rawtypes"})
     public void setupCoverpage(final Map<String, String> coverFormMap) {
 
+        LOG.debug("setupCoverpage");
+        
         File fileCoverTemplate = new File(getClass().getClassLoader()
             .getResource("templates/ausbildungsnachweis_deckblatt.docx").getFile());
         File newFile = new File(OUTPUT_PATH + "\\test.docx");

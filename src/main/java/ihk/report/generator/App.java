@@ -11,9 +11,12 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import org.apache.log4j.BasicConfigurator;
+
 /**
  * The Class App.
  */
+@SuppressWarnings("restriction")
 public class App extends Application {
 
     /**
@@ -22,6 +25,7 @@ public class App extends Application {
      * @param args the arguments
      */
     public static void main(String[] args) {
+        BasicConfigurator.configure();
         Application.launch(args);
     }
 
