@@ -150,6 +150,10 @@ public class ViewController implements Initializable {
 			File excelDir = new DialogHelper("Verzeichnisauswahl für Excel-Dateien (.xls/.xslx)").openDirectoryChooser();
 			processSelectedDir(excelDir);
 		});
+		this.btnStartExcelConversion.setDisable(true);
+		this.btnStartExcelConversion.setOnAction(e -> {
+		    new ExcelReader().start(this.inputExcelDirectory.getText());
+		});
 		
 		/**
 		 * Titled Pane 3 (TODO: what is in third pane)
@@ -197,8 +201,8 @@ public class ViewController implements Initializable {
 	private void processSelectedDir(File dir) {
 		
 		if (dir == null) {
+		    // do nothing, user just canceled directory chooser
 		    LOG.debug("Directory is invalid or chooser was canceled.");
-			// do nothing, user just canceled directory chooser
 		} else {
 			System.out.println("dir is: " + dir.getAbsolutePath());
 			LOG.debug("Selected dir is: " + dir.getAbsolutePath());
@@ -210,6 +214,7 @@ public class ViewController implements Initializable {
 				}
 				new NotificationWindow("DEBUG", "Following formats found: " + fileFormats.toString().substring(1, fileFormats.toString().length() - 1));
 				this.inputExcelDirectory.setText(dir.getAbsolutePath());
+				this.btnStartExcelConversion.setDisable(false);
 			} else {
 				// notifies the user that there are no excel files inside the chosen directory
 				// TODO: exceldir->invalid (for weekly reports)

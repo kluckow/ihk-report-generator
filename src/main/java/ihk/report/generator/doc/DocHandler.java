@@ -51,11 +51,11 @@ public class DocHandler {
         FileOutputStream out = null;
         try {
             out = new FileOutputStream(
-                new File(System.getProperty("user.home" + File.separator + "Downloads")));
+                new File(System.getProperty("user.home") + File.separator + "Downloads"));
         } catch (FileNotFoundException e) {
             LOG.error("File not found!");
         } finally {
-            // document.write(out);
+//             document.write(out);
             try {
                 if (out != null) {
                     out.close();

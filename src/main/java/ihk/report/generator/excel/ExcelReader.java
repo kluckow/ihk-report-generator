@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -21,6 +22,11 @@ import ihk.report.generator.util.FileUtils;
 
 public class ExcelReader {
 
+    /**
+     * The logger for this class.
+     */
+    private static final Logger LOG = Logger.getLogger(ExcelReader.class);
+    
 	private static final String XLS_FILEFORMAT = ".xls";
 	private static final String XLSX_FILEFORMAT = ".xlsx";
 	private static final List<String> RELEVANT_FILEFORMATS = Arrays.asList(XLS_FILEFORMAT, XLSX_FILEFORMAT);
@@ -39,16 +45,20 @@ public class ExcelReader {
 		
 		return null;
 	}
-	public void start(File dir) {
+	public void start(String dirName) {
 
+	    File excelDir = new File(dirName);
+	    
 		/**
 		 * Pseudo for dir2xls
 		 * 
 		 * 1. get all .xls as File in dir
 		 * 2. use pseudo below
 		 */
-		loadExcelFiles(dir);
-		
+		loadExcelFiles(excelDir);
+		for (File file : this.xlsFiles) {
+            LOG.debug(file.getAbsolutePath());
+        }
 		/**
 		 * Pseudo for each .xls
 		 * 
@@ -67,9 +77,11 @@ public class ExcelReader {
 		
 		
 		
-		FileInputStream fis;
+		FileInputStream fis = null;
 		try {
-			fis = new FileInputStream("testdata/test.xls");
+		    File testXls = new File(getClass().getClassLoader()
+	            .getResource("testdata/test.xls").getFile());
+			fis = new FileInputStream(testXls);
 			
 //		create workbook
 		HSSFWorkbook workbook = new HSSFWorkbook(fis);
@@ -92,8 +104,6 @@ public class ExcelReader {
 		int headerRowIndex = 0;
 		boolean isRelevantHeader;
 		HSSFRow headerRow = worksheet.getRow(headerRowIndex);
-//		System.out.println("---------------------------------------------------");
-		
 		
 		// get relevant column indices
 		for (int col = 0; col < cellCount; col++) {
@@ -104,9 +114,6 @@ public class ExcelReader {
 				
 				// save indices
 				relevantRowIndices.add(col);
-				
-//				System.out.print(headerRow.getCell(col).getStringCellValue() + ", Index: ");
-//				System.out.println(col);
 			}
 		}
 		
@@ -121,34 +128,30 @@ public class ExcelReader {
 			for (int index: relevantRowIndices) {
 				
 				worksheet.getRow(row).getCell(index).getCellType();
-//				print index of cell
-//				System.out.print(worksheet.getRow(row).getCell(index).getCellType() + " ");
 				switch (index) {
-				case (1):
+				case 1:
 					// define vorgang
 					String vorgang = worksheet.getRow(row).getCell(index).getStringCellValue();
 					// add vorgang to entry
 //					entry[row-1].setVorgang(vorgang);
 					System.out.println(vorgang);
 					break;
-				case (2):
+				case 2:
 					// define stunden
 					double stunden = worksheet.getRow(row).getCell(index).getNumericCellValue();
 					// add stunden to entry
 //					entry[row-1].setStunden(stunden);
 					System.out.println(stunden);
 					break;
-				case (3):
+				case 3:
                         worksheet.getRow(row).getCell(index).getDateCellValue();
 //					date = date.substring(0, 10);
 //					entry[row-1].setDatum(date);
-//					System.out.println(date.toLocaleString().substring(0, 10));
 					break;
-				case (5):
+				case 5:
 					// define fullName
 					String fullName = worksheet.getRow(row).getCell(index).getStringCellValue();
 					//  defin firstName and lastName by splitting by space character
-					@SuppressWarnings("unused")
                     String[] tmp = fullName.split(" ");
                         
 
@@ -160,15 +163,13 @@ public class ExcelReader {
 //					System.out.println(firstName);
 //					System.out.println(lastName);
 					break;
-				case (17):
+				case 17:
 					// define beschreibung
 					System.out.println(worksheet.getRow(row).getCell(index).getStringCellValue());
 					break;
 				}
 				
-				System.out.print("");
 			}
-			System.out.println();
 		}
 		workbook.close();
 		
@@ -183,10 +184,10 @@ public class ExcelReader {
 	}
 	private void processExcelFiles() {
 		
-		for (File excel : this.xlsFiles) {
-			FileInputStream fis;
+	    FileInputStream fis = null;
+		for (File xlsFile : this.xlsFiles) {
 			try {
-				fis = new FileInputStream(excel.getAbsolutePath());
+				fis = new FileInputStream(xlsFile);
 				// create workbook
 				HSSFWorkbook workbook = new HSSFWorkbook(fis);
 				HSSFSheet worksheet = workbook.getSheet(EXCEL_WORKBOOK_ZEITNACHWEISE);
