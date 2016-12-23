@@ -11,6 +11,7 @@ import javafx.scene.control.Alert;
  *
  * @author kluckow
  */
+@SuppressWarnings("restriction")
 public class NotificationWindow extends Alert {
     
     /**

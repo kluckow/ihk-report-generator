@@ -21,6 +21,7 @@ import javafx.scene.layout.StackPane;
 /**
  * The Class ViewController.
  */
+@SuppressWarnings("restriction")
 public class ViewController implements Initializable {
 
 	/**

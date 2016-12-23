@@ -8,6 +8,7 @@ import javafx.stage.FileChooser;
 /**
  * The Class ChooseDialogHelper.
  */
+@SuppressWarnings("restriction")
 public class DialogHelper {
 
 	private String title;

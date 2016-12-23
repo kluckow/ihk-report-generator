@@ -22,6 +22,7 @@ public class CloseProgramDialog extends Alert {
      *
      * @param owner the owner
      */
+    @SuppressWarnings("restriction")
     public CloseProgramDialog(Stage owner) {
         super(AlertType.CONFIRMATION);
         setupLabels();

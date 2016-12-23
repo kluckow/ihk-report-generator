@@ -26,7 +26,6 @@ import ihk.report.generator.excel.unit.Week;
 
 public class DocHandler {
 
-    
     /**
      * The logger for this class.
      */
