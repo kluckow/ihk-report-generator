@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+
+import org.apache.log4j.Logger;
+
 import ihk.report.generator.doc.DocHandler;
 import ihk.report.generator.excel.ExcelReader;
 import ihk.report.generator.util.FileUtils;
@@ -24,6 +27,11 @@ import javafx.scene.layout.StackPane;
 @SuppressWarnings("restriction")
 public class ViewController implements Initializable {
 
+    /**
+     * The logger for this class.
+     */
+    private static final Logger LOG = Logger.getLogger(DocHandler.class);
+    
 	/**
 	 * Root component
 	 * Used to handle stage
@@ -71,9 +79,11 @@ public class ViewController implements Initializable {
 	 * Components in TitledPane 2 for choosing the directory containing .xls files
 	 */
 	@FXML
+	private TextField inputExcelDirectory;
+	@FXML
 	private Button btnSearchExcelDirectory;
 	@FXML
-	private TextField inputExcelDirectory;
+	private Button btnStartExcelConversion;
 	
 	/* (non-Javadoc)
 	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
@@ -81,7 +91,7 @@ public class ViewController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		System.out.println("init view...");
+	    LOG.debug("Initialize view.");
 		configureComponents();
 		
 		// just for faster test cycles
@@ -108,7 +118,7 @@ public class ViewController implements Initializable {
 		 * Global MenuBar
 		 */
 		this.menuItemCloseProgram.setOnAction(e -> {
-			System.out.println("Closing Program...");
+		    LOG.debug("Closing program.");
 			Stage stage = (Stage) mainPain.getScene().getWindow();
 			new CloseProgramDialog(stage);
 		});
@@ -118,19 +128,16 @@ public class ViewController implements Initializable {
 		 */
 		this.btnCoverGenerateCover.setOnAction(e -> {
 		    
-		    new NotificationWindow("Dummy", "Noch nicht implementiert!");
-		    
-			System.out.println("Validate form and create coverpage as .docx file.");
-			
 			if (!validateCoverpageForm()) {
 			    new NotificationWindow("Formular ungültig!", "Bitte überprüfen Sie Ihre Eingaben!");
+			    LOG.debug("Coverpage form is invalid.");
 			    return;
 			} else if (createCoverpage()) {
 			    // TODO: new YesNoDialog() to ask the user to keep/reset form data 
-			    System.out.println("Successfully created coverpage!");
+			    LOG.debug("Successfully created coverpage as .docx file.");
 			} else {
 			    // TODO: inform the user about failure of creating coverpage 
-			    System.out.println("Could not create coverpage!");
+			    LOG.error("Could not create coverpage!");
 			}
 			
 		});
@@ -139,7 +146,7 @@ public class ViewController implements Initializable {
 		 * Titled Pane 2 (exceldir chooser)
 		 */
 		this.btnSearchExcelDirectory.setOnAction(e -> {
-			System.out.println("Opening DirectoryChooser for exceldir.");
+		    LOG.debug("Opening DirectoryChooser for exceldir.");
 			File excelDir = new DialogHelper("Verzeichnisauswahl für Excel-Dateien (.xls/.xslx)").openDirectoryChooser();
 			processSelectedDir(excelDir);
 		});
@@ -174,7 +181,8 @@ public class ViewController implements Initializable {
     }
 
     private boolean validateCoverpageForm() {
-        // TODO: Auto-generated method stub
+        LOG.debug("Validate coverpage form.");
+        // TODO: validate coverpage form via regexp
         return true;
     }
 
@@ -189,15 +197,16 @@ public class ViewController implements Initializable {
 	private void processSelectedDir(File dir) {
 		
 		if (dir == null) {
-			System.out.println("excel dir is: invalid (null)!");
+		    LOG.debug("Directory is invalid or chooser was canceled.");
 			// do nothing, user just canceled directory chooser
 		} else {
 			System.out.println("dir is: " + dir.getAbsolutePath());
+			LOG.debug("Selected dir is: " + dir.getAbsolutePath());
 			
 			List<String> fileFormats = new FileUtils().getExistingFormatsInDirByFormats(dir, new ExcelReader().getExcelFileFormats());
 			if (!fileFormats.isEmpty()) {
 				for (String fileFormat : fileFormats) {
-					System.out.println(fileFormat);
+				    LOG.debug("Found file format: " + fileFormat);
 				}
 				new NotificationWindow("DEBUG", "Following formats found: " + fileFormats.toString().substring(1, fileFormats.toString().length() - 1));
 				this.inputExcelDirectory.setText(dir.getAbsolutePath());

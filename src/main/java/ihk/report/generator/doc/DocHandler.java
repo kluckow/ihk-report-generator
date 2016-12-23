@@ -53,8 +53,7 @@ public class DocHandler {
             out = new FileOutputStream(
                 new File(System.getProperty("user.home" + File.separator + "Downloads")));
         } catch (FileNotFoundException e) {
-            System.out.println("File not found.");
-            e.printStackTrace();
+            LOG.error("File not found!");
         } finally {
             // document.write(out);
             try {
@@ -65,7 +64,6 @@ public class DocHandler {
                 e.printStackTrace();
             }
         }
-        System.out.println("createdocument.docx written successully");
     }
 
     @SuppressWarnings({ "rawtypes"})
@@ -77,13 +75,16 @@ public class DocHandler {
             .getResource("templates/ausbildungsnachweis_deckblatt.docx").getFile());
         File newFile = new File(OUTPUT_PATH + "\\test.docx");
         Path newFilePath;
+        FileInputStream fis = null;
+        FileOutputStream fos = null;
+        XWPFDocument doc = null;
         try {
             newFilePath = Files.copy(fileCoverTemplate.toPath(), newFile.toPath(),
                 StandardCopyOption.REPLACE_EXISTING);
             File targetFile = new File(newFilePath.toString());
-            FileInputStream fis = new FileInputStream(targetFile);
+            fis = new FileInputStream(targetFile);
             
-            XWPFDocument doc = new XWPFDocument(fis);
+            doc = new XWPFDocument(fis);
             
             // this section is currently not used, atleast not for coverpage template
             for (XWPFParagraph p : doc.getParagraphs()) {
@@ -94,7 +95,6 @@ public class DocHandler {
                         Iterator<Entry<String, String>> it1 = coverFormMap.entrySet().iterator();
                         while (it1.hasNext()) {
                             Map.Entry pair = it1.next();
-
                             if (text != null && text.contains((String) pair.getKey())) {
                                 text = text.replace((String) pair.getKey(), (String) pair.getValue());
                                 r.setText(text, 0);
@@ -110,13 +110,9 @@ public class DocHandler {
                         for (XWPFParagraph p : cell.getParagraphs()) {
                             for (XWPFRun r : p.getRuns()) {
                                 String text = r.getText(0);
-                                
-                                System.out.println(text);
-                                
                                 Iterator<Entry<String, String>> it2 = coverFormMap.entrySet().iterator();
                                 while (it2.hasNext()) {
                                     Map.Entry pair = it2.next();
-
                                     if (text != null && text.contains(pair.getKey().toString())) {
                                         text = text.replace((String) pair.getKey(), (String) pair.getValue());
                                         r.setText(text, 0);
@@ -128,13 +124,20 @@ public class DocHandler {
                 }
             }
             
-            FileOutputStream fos = new FileOutputStream(targetFile);
-            doc.write(fos);
             fis.close();
-            fos.close();
-            doc.close();
+            fos = new FileOutputStream(targetFile);
+            doc.write(fos);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error("Fehler beim lesen/erstellen/beschreiben der Word-Datei!");
+        } finally {
+            try {
+                doc.close();
+                if (fos != null) {
+                    fos.close();
+                }
+            } catch (IOException e) {
+                LOG.error("Fehler beim Zugriff auf die Word-Datei!");
+            }
         }
 
     }
